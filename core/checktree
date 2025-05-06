@@ -1,4 +1,4 @@
-#!/usr/bin/python -E
+#!/usr/bin/env tauthon -E
 
 import sys, os, re
 

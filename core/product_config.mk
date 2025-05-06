@@ -213,19 +213,19 @@ _cpm_word2 :=
 current_product_makefile := $(strip $(current_product_makefile))
 all_product_makefiles := $(strip $(all_product_makefiles))
 
-ifneq (,$(filter product-graph dump-products, $(MAKECMDGOALS)))
+#ifneq (,$(filter product-graph dump-products, $(MAKECMDGOALS)))
 # Import all product makefiles.
-$(call import-products, $(all_product_makefiles))
-else
+#$(call import-products, $(all_product_makefiles))
+#else
 # Import just the current product.
-ifndef current_product_makefile
-$(error Can not locate config makefile for product "$(TARGET_PRODUCT)")
-endif
-ifneq (1,$(words $(current_product_makefile)))
-$(error Product "$(TARGET_PRODUCT)" ambiguous: matches $(current_product_makefile))
-endif
-$(call import-products, $(current_product_makefile))
-endif  # Import all or just the current product makefile
+#ifndef current_product_makefile
+#$(error Can not locate config makefile for product "$(TARGET_PRODUCT)")
+#endif
+#ifneq (1,$(words $(current_product_makefile)))
+#$(error Product "$(TARGET_PRODUCT)" ambiguous: matches $(current_product_makefile))
+#endif
+#$(call import-products, $(current_product_makefile))
+#endif  # Import all or just the current product makefile
 
 # Sanity check
 $(check-all-products)
@@ -238,10 +238,6 @@ endif
 # Convert a short name like "sooner" into the path to the product
 # file defining that product.
 #
-INTERNAL_PRODUCT := $(call resolve-short-product-name, $(TARGET_PRODUCT))
-ifneq ($(current_product_makefile),$(INTERNAL_PRODUCT))
-$(error PRODUCT_NAME inconsistent in $(current_product_makefile) and $(INTERNAL_PRODUCT))
-endif
 current_product_makefile :=
 all_product_makefiles :=
 all_product_configs :=

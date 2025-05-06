@@ -26,7 +26,7 @@
 #
 # A mapping from shorthand names to include directories.
 #
-pathmap_INCL := \
+#pathmap_INCL := \
     camera:system/media/camera/include \
     frameworks-base:frameworks/base/include \
     frameworks-native:frameworks/native/include \

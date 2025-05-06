@@ -15,11 +15,11 @@
 #
 
 #
-# This file should set PRODUCT_MAKEFILES to a list of product makefiles
+# This file should set # PRODUCT_MAKEFILES to a list of product makefiles
 # to expose to the build system.  LOCAL_DIR will already be set to
 # the directory containing this file.
-# PRODUCT_MAKEFILES is set up in AndroidProducts.mks.
-# Format of PRODUCT_MAKEFILES:
+# # PRODUCT_MAKEFILES is set up in AndroidProducts.mks.
+# Format of # PRODUCT_MAKEFILES:
 # <product_name>:<path_to_the_product_makefile>
 # If the <product_name> is the same as the base file name (without dir
 # and the .mk suffix) of the product makefile, "<product_name>:" can be
@@ -33,7 +33,7 @@
 
 # Unbundled apps will be built with the most generic product config.
 ifneq ($(TARGET_BUILD_APPS),)
-PRODUCT_MAKEFILES := \
+# PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/aosp_arm.mk \
     $(LOCAL_DIR)/full.mk \
     $(LOCAL_DIR)/generic_armv5.mk \
@@ -45,7 +45,7 @@ PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/aosp_mips64.mk \
     $(LOCAL_DIR)/aosp_x86_64.mk
 else
-PRODUCT_MAKEFILES := \
+# PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/core.mk \
     $(LOCAL_DIR)/generic.mk \
     $(LOCAL_DIR)/generic_x86.mk \

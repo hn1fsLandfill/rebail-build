@@ -20,6 +20,6 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/generic.mk)
 
 # Overrides
-PRODUCT_BRAND := generic_armv5
-PRODUCT_DEVICE := generic_armv5
-PRODUCT_NAME := generic_armv5
+# PRODUCT_BRAND := generic_armv5
+# PRODUCT_DEVICE := generic_armv5
+# PRODUCT_NAME := generic_armv5

@@ -16,7 +16,7 @@
 # Tiny configuration for small devices such as wearables. Includes base and embedded.
 # No telephony
 
-PRODUCT_PACKAGES := \
+# # PRODUCT_PACKAGES := \
     Bluetooth \
     CalendarProvider \
     ContactsProvider \
@@ -24,21 +24,21 @@ PRODUCT_PACKAGES := \
     FusedLocation \
     InputDevices
 
-PRODUCT_PACKAGES += \
+# # PRODUCT_PACKAGES += \
     clatd \
     clatd.conf \
     pppd
 
-PRODUCT_PACKAGES += \
+# # PRODUCT_PACKAGES += \
     audio.primary.default \
     audio_policy.default \
     local_time.default \
     power.default
 
-PRODUCT_PACKAGES += \
+# # PRODUCT_PACKAGES += \
     local_time.default
 
-PRODUCT_PACKAGES += \
+# # PRODUCT_PACKAGES += \
     BackupRestoreConfirmation \
     DefaultContainerService \
     SettingsProvider \
@@ -50,7 +50,7 @@ PRODUCT_PACKAGES += \
     framework-res \
     installd \
     ims-common \
-    ip \
+       ip \
     ip-up-vpn \
     ip6tables \
     iptables \
@@ -81,7 +81,7 @@ PRODUCT_PACKAGES += \
     wifi-service
 
 # The order matters
-PRODUCT_BOOT_JARS := \
+## # PRODUCT_BOOT_JARS := \
     core-libart \
     conscrypt \
     okhttp \
@@ -96,25 +96,25 @@ PRODUCT_BOOT_JARS := \
     nullwebview \
     org.apache.http.legacy.boot
 
-# The order of PRODUCT_SYSTEM_SERVER_JARS matters.
-PRODUCT_SYSTEM_SERVER_JARS := \
+# The order of # # PRODUCT_SYSTEM_SERVER_JARS matters.
+## # PRODUCT_SYSTEM_SERVER_JARS := \
     services \
     wifi-service
 
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+## # PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.zygote=zygote32
-PRODUCT_COPY_FILES += \
+## # PRODUCT_COPY_FILES += \
     system/core/rootdir/init.zygote32.rc:root/init.zygote32.rc
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.carrier=unknown
+## # PRODUCT_PROPERTY_OVERRIDES += \
+#    ro.carrier=unknown
 
-$(call inherit-product, $(SRC_TARGET_DIR)/product/runtime_libart.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
-$(call inherit-product-if-exists, frameworks/base/data/fonts/fonts.mk)
-$(call inherit-product-if-exists, external/roboto-fonts/fonts.mk)
+#$(call inherit-product, $(SRC_TARGET_DIR)/product/runtime_libart.mk)
+#$(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
+#$(call inherit-product-if-exists, frameworks/base/data/fonts/fonts.mk)
+#$(call inherit-product-if-exists, external/roboto-fonts/fonts.mk)
 
-# Overrides
-PRODUCT_BRAND := tiny
-PRODUCT_DEVICE := tiny
-PRODUCT_NAME := core_tiny
+## Overrides
+## # PRODUCT_BRAND := tiny
+## # PRODUCT_DEVICE := tiny
+## # PRODUCT_NAME := core_tiny

@@ -24,7 +24,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/board/generic_arm64/device.mk)
 
 include $(SRC_TARGET_DIR)/product/emulator.mk
-PRODUCT_NAME := aosp_arm64
-PRODUCT_DEVICE := generic_arm64
-PRODUCT_BRAND := Android
-PRODUCT_MODEL := AOSP on ARM arm64 Emulator
+# PRODUCT_NAME := aosp_arm64
+# PRODUCT_DEVICE := generic_arm64
+# PRODUCT_BRAND := Android
+# PRODUCT_MODEL := AOSP on ARM arm64 Emulator

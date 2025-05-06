@@ -26,7 +26,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/board/generic_mips64/device.mk)
 include $(SRC_TARGET_DIR)/product/emulator.mk
 
 # Overrides
-PRODUCT_NAME := full_mips64
-PRODUCT_DEVICE := generic_mips64
-PRODUCT_BRAND := Android
-PRODUCT_MODEL := AOSP on MIPS64 Emulator
+# PRODUCT_NAME := full_mips64
+# PRODUCT_DEVICE := generic_mips64
+# PRODUCT_BRAND := Android
+# PRODUCT_MODEL := AOSP on MIPS64 Emulator

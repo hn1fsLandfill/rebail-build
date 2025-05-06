@@ -17,7 +17,7 @@ pdk fusion: $(DEFAULT_GOAL)
 # 2) TARGET_BUILD_PDK is passed in from the environment
 
 # if PDK_FUSION_PLATFORM_ZIP is specified, do not override.
-ifndef PDK_FUSION_PLATFORM_ZIP
+ifdef AMOGUS_PDK_FUSION_PLATFORM_ZIP
 # Most PDK project paths should be using vendor/pdk/TARGET_DEVICE
 # but some legacy ones (e.g. mini_armv7a_neon generic PDK) were setup
 # with vendor/pdk/TARGET_PRODUCT.
@@ -51,11 +51,10 @@ ifneq (,$(filter platform-java, $(MAKECMDGOALS))$(PDK_FUSION_PLATFORM_ZIP))
 # additional items to add to platform.zip for platform-java build
 # For these dirs, add classes.jar and javalib.jar from the dir to platform.zip
 # all paths under out dir
-PDK_PLATFORM_JAVA_ZIP_JAVA_TARGET_LIB_DIR += \
+#PDK_PLATFORM_JAVA_ZIP_JAVA_TARGET_LIB_DIR += \
   target/common/obj/JAVA_LIBRARIES/android.test.runner_intermediates \
   target/common/obj/JAVA_LIBRARIES/android-common_intermediates \
   target/common/obj/JAVA_LIBRARIES/android-ex-camera2_intermediates \
-  target/common/obj/JAVA_LIBRARIES/android_stubs_current_intermediates \
   target/common/obj/JAVA_LIBRARIES/bouncycastle_intermediates \
   target/common/obj/JAVA_LIBRARIES/conscrypt_intermediates \
   target/common/obj/JAVA_LIBRARIES/core-libart_intermediates \
@@ -68,7 +67,7 @@ PDK_PLATFORM_JAVA_ZIP_JAVA_TARGET_LIB_DIR += \
   target/common/obj/JAVA_LIBRARIES/voip-common_intermediates \
 
 # not java libraries
-PDK_PLATFORM_JAVA_ZIP_CONTENTS += \
+#PDK_PLATFORM_JAVA_ZIP_CONTENTS += \
 	target/common/obj/APPS/framework-res_intermediates/package-export.apk \
 	target/common/obj/APPS/framework-res_intermediates/src/R.stamp
 endif # platform-java or FUSION build
@@ -156,7 +155,7 @@ $(PDK_FUSION_OUT_DIR)/$(strip $(1)): $(_pdk_fusion_intermediates)/$(strip $(1)) 
 endef
 
 # needs explicit dependency as package-export.apk is not explicitly pulled
-$(eval $(call JAVA_dependency_template,\
+#$(eval $(call JAVA_dependency_template,\
 target/common/obj/APPS/framework-res_intermediates/src/R.stamp,\
 target/common/obj/APPS/framework-res_intermediates/package-export.apk))
 

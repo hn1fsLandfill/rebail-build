@@ -20,6 +20,6 @@
 include $(SRC_TARGET_DIR)/product/generic.mk
 
 # Overrides
-PRODUCT_BRAND := generic_x86
-PRODUCT_DEVICE := generic_x86
-PRODUCT_NAME := generic_x86
+# PRODUCT_BRAND := generic_x86
+# PRODUCT_DEVICE := generic_x86
+# PRODUCT_NAME := generic_x86

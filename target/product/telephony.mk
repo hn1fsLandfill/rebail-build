@@ -17,10 +17,10 @@
 # This is the list of product-level settings that are specific
 # to products that have telephony hardware.
 
-PRODUCT_PACKAGES := \
+# PRODUCT_PACKAGES := \
     CarrierConfig \
     Dialer \
     CallLogBackup \
     rild
 
-PRODUCT_COPY_FILES := \
+# PRODUCT_COPY_FILES := \

@@ -161,17 +161,17 @@ board_config_mk := \
 		$(shell test -d device && find device -maxdepth 4 -path '*/$(TARGET_DEVICE)/BoardConfig.mk') \
 		$(shell test -d vendor && find vendor -maxdepth 4 -path '*/$(TARGET_DEVICE)/BoardConfig.mk') \
 	))
-ifeq ($(board_config_mk),)
-  $(error No config file found for TARGET_DEVICE $(TARGET_DEVICE))
-endif
-ifneq ($(words $(board_config_mk)),1)
-  $(error Multiple board config files for TARGET_DEVICE $(TARGET_DEVICE): $(board_config_mk))
-endif
-include $(board_config_mk)
-ifeq ($(TARGET_ARCH),)
-  $(error TARGET_ARCH not defined by board config: $(board_config_mk))
-endif
-TARGET_DEVICE_DIR := $(patsubst %/,%,$(dir $(board_config_mk)))
+#ifeq ($(board_config_mk),)
+#  $(error No config file found for TARGET_DEVICE $(TARGET_DEVICE))
+#endif
+#ifneq ($(words $(board_config_mk)),1)
+#  $(error Multiple board config files for TARGET_DEVICE $(TARGET_DEVICE): $(board_config_mk))
+#endif
+#include $(board_config_mk)
+#ifeq ($(TARGET_ARCH),)
+#  $(error TARGET_ARCH not defined by board config: $(board_config_mk))
+#endif
+#TARGET_DEVICE_DIR := $(patsubst %/,%,$(dir $(board_config_mk)))
 board_config_mk :=
 
 ###########################################

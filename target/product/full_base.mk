@@ -19,7 +19,7 @@
 # build of the emulator, but all those aspects can be overridden
 # in inherited configurations.
 
-PRODUCT_PACKAGES := \
+# PRODUCT_PACKAGES := \
     libfwdlockengine \
     OpenWnn \
     libWnnEngDic \
@@ -27,7 +27,7 @@ PRODUCT_PACKAGES := \
     libwnndict \
     WAPPushManager
 
-PRODUCT_PACKAGES += \
+# PRODUCT_PACKAGES += \
     Galaxy4 \
     HoloSpiralWallpaper \
     LiveWallpapers \
@@ -38,12 +38,12 @@ PRODUCT_PACKAGES += \
     PhotoTable
 
 # Additional settings used in all AOSP builds
-PRODUCT_PROPERTY_OVERRIDES := \
+# PRODUCT_PROPERTY_OVERRIDES := \
     ro.config.ringtone=Ring_Synth_04.ogg \
     ro.config.notification_sound=pixiedust.ogg
 
 # Put en_US first in the list, so make it default.
-PRODUCT_LOCALES := en_US
+# PRODUCT_LOCALES := en_US
 
 # Get some sounds
 $(call inherit-product-if-exists, frameworks/base/data/sounds/AllAudio.mk)

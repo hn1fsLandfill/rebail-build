@@ -16,7 +16,7 @@
 
 # Provides a functioning ART environment without Android frameworks
 
-PRODUCT_PACKAGES += \
+# PRODUCT_PACKAGES += \
     apache-xml \
     bouncycastle \
     cacerts \
@@ -45,7 +45,7 @@ PRODUCT_PACKAGES += \
     okhttp \
     patchoat
 
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+# PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     dalvik.vm.image-dex2oat-Xms=64m \
     dalvik.vm.image-dex2oat-Xmx=64m \
     dalvik.vm.dex2oat-Xms=64m \

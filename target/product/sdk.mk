@@ -18,4 +18,4 @@
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/sdk_phone_armv7.mk)
 
-PRODUCT_NAME := sdk
+# PRODUCT_NAME := sdk

@@ -25,7 +25,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/board/generic/device.mk)
 include $(SRC_TARGET_DIR)/product/emulator.mk
 
 # Overrides
-PRODUCT_NAME := full
-PRODUCT_DEVICE := generic
-PRODUCT_BRAND := Android
-PRODUCT_MODEL := AOSP on ARM Emulator
+# PRODUCT_NAME := full
+# PRODUCT_DEVICE := generic
+# PRODUCT_BRAND := Android
+# PRODUCT_MODEL := AOSP on ARM Emulator

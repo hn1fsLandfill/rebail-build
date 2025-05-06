@@ -17,6 +17,6 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/sdk_base.mk)
 
 # Overrides
-PRODUCT_BRAND := generic
-PRODUCT_NAME := sdk_phone_armv7
-PRODUCT_DEVICE := generic
+# PRODUCT_BRAND := generic
+# PRODUCT_NAME := sdk_phone_armv7
+# PRODUCT_DEVICE := generic

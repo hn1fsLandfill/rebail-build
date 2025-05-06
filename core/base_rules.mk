@@ -209,12 +209,12 @@ aidl_sources := $(addprefix $(TOP_DIR)$(LOCAL_PATH)/, $(aidl_sources))
 aidl_preprocess_import :=
 LOCAL_SDK_VERSION:=$(strip $(LOCAL_SDK_VERSION))
 ifdef LOCAL_SDK_VERSION
-ifneq ($(filter current system_current, $(LOCAL_SDK_VERSION)$(TARGET_BUILD_APPS)),)
+#ifneq ($(filter current system_current, $(LOCAL_SDK_VERSION)$(TARGET_BUILD_APPS)),)
   # LOCAL_SDK_VERSION is current and no TARGET_BUILD_APPS
-  aidl_preprocess_import := $(TARGET_OUT_COMMON_INTERMEDIATES)/framework.aidl
-else
+  aidl_preprocess_import := prebuilts/sdk/current/framework.aidl
+#else
   aidl_preprocess_import := $(HISTORICAL_SDK_VERSIONS_ROOT)/$(LOCAL_SDK_VERSION)/framework.aidl
-endif # not current or system_current
+#endif # not current or system_current
 else
 # build against the platform.
 LOCAL_AIDL_INCLUDES += $(FRAMEWORKS_BASE_JAVA_SRC_DIRS)
@@ -395,20 +395,20 @@ $(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_CLASS_INTERMEDIATES_DIR := $(intermediate
 $(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_SOURCE_INTERMEDIATES_DIR := $(intermediates)/src
 $(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_JAVA_SOURCES := $(all_java_sources)
 $(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_JAVA_OBJECTS := $(patsubst %.java,%.class,$(LOCAL_SRC_FILES))
-ifeq ($(my_prefix),TARGET_)
-ifeq ($(LOCAL_SDK_VERSION),)
-$(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_BOOTCLASSPATH := -bootclasspath $(call java-lib-files,core-libart)
-else
-ifeq ($(LOCAL_SDK_VERSION)$(TARGET_BUILD_APPS),current)
+#ifeq ($(my_prefix),TARGET_)
+#ifeq ($(LOCAL_SDK_VERSION),)
+#$(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_BOOTCLASSPATH := -bootclasspath $(call java-lib-files,core-libart)
+#else
+#ifeq ($(LOCAL_SDK_VERSION)$(TARGET_BUILD_APPS),current)
 # LOCAL_SDK_VERSION is current and no TARGET_BUILD_APPS.
-$(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_BOOTCLASSPATH := -bootclasspath $(call java-lib-files,android_stubs_current)
-else ifeq ($(LOCAL_SDK_VERSION)$(TARGET_BUILD_APPS),system_current)
-$(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_BOOTCLASSPATH := -bootclasspath $(call java-lib-files,android_system_stubs_current)
-else
-$(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_BOOTCLASSPATH := -bootclasspath $(call java-lib-files,sdk_v$(LOCAL_SDK_VERSION))
-endif # current or system_current
-endif # LOCAL_SDK_VERSION
-endif # TARGET_
+$(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_BOOTCLASSPATH := -cp $(ANDROID_HOME)/platforms/android-34/android.jar # $(call java-lib-files,android_stubs_current)
+#else ifeq ($(LOCAL_SDK_VERSION)$(TARGET_BUILD_APPS),system_current)
+#$(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_BOOTCLASSPATH := -bootclasspath $(call java-lib-files,android_system_stubs_current)
+#else
+#$(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_BOOTCLASSPATH := -bootclasspath $(call java-lib-files,sdk_v$(LOCAL_SDK_VERSION))
+#endif # current or system_current
+#endif # LOCAL_SDK_VERSION
+#endif # TARGET_
 $(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_RESOURCE_DIR := $(LOCAL_RESOURCE_DIR)
 $(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_ASSET_DIR := $(LOCAL_ASSET_DIR)
 $(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_STATIC_JAVA_LIBRARIES := $(full_static_java_libs)

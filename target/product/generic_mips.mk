@@ -21,6 +21,6 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/generic_no_telephony.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/telephony.mk)
 
 # Overrides
-PRODUCT_BRAND := generic_mips
-PRODUCT_DEVICE := generic_mips
-PRODUCT_NAME := generic_mips
+# PRODUCT_BRAND := generic_mips
+# PRODUCT_DEVICE := generic_mips
+# PRODUCT_NAME := generic_mips

@@ -248,12 +248,8 @@ else
 INSTALLED_RECOVERYIMAGE_TARGET :=
 endif
 
-$(INSTALLED_BUILD_PROP_TARGET): $(intermediate_system_build_prop) $(INSTALLED_RECOVERYIMAGE_TARGET)
-	@echo "Target build info: $@"
-	$(hide) cat $(intermediate_system_build_prop) > $@
-ifdef INSTALLED_RECOVERYIMAGE_TARGET
-	$(hide) echo ro.expect.recovery_id=`cat $(RECOVERYIMAGE_ID_FILE)` >> $@
-endif
+$(INSTALLED_BUILD_PROP_TARGET):
+	@true
 
 # -----------------------------------------------------------------
 # vendor build.prop
@@ -808,24 +804,24 @@ else
 recovery_font := $(call include-path-for, recovery)/fonts/12x22.png
 endif
 
-recovery_resources_private := $(strip $(wildcard $(TARGET_DEVICE_DIR)/recovery/res))
-recovery_resource_deps := $(shell find $(recovery_resources_common) \
+#recovery_resources_private := $(strip $(wildcard $(TARGET_DEVICE_DIR)/recovery/res))
+#recovery_resource_deps := $(shell find $(recovery_resources_common) \
   $(recovery_resources_private) -type f)
-ifdef TARGET_RECOVERY_FSTAB
-recovery_fstab := $(TARGET_RECOVERY_FSTAB)
-else
-recovery_fstab := $(strip $(wildcard $(TARGET_DEVICE_DIR)/recovery.fstab))
-endif
+#ifdef TARGET_RECOVERY_FSTAB
+#recovery_fstab := $(TARGET_RECOVERY_FSTAB)
+#else
+#recovery_fstab := $(strip $(wildcard $(TARGET_DEVICE_DIR)/recovery.fstab))
+#endif
 # Named '.dat' so we don't attempt to use imgdiff for patching it.
-RECOVERY_RESOURCE_ZIP := $(TARGET_OUT)/etc/recovery-resource.dat
+#RECOVERY_RESOURCE_ZIP := $(TARGET_OUT)/etc/recovery-resource.dat
 
-ifeq ($(recovery_resources_private),)
-  $(info No private recovery resources for TARGET_DEVICE $(TARGET_DEVICE))
-endif
+#ifeq ($(recovery_resources_private),)
+#  $(info No private recovery resources for TARGET_DEVICE $(TARGET_DEVICE))
+#endif
 
-ifeq ($(recovery_fstab),)
-  $(info No recovery.fstab for TARGET_DEVICE $(TARGET_DEVICE))
-endif
+#ifeq ($(recovery_fstab),)
+#  $(info No recovery.fstab for TARGET_DEVICE $(TARGET_DEVICE))
+#endif
 
 INTERNAL_RECOVERYIMAGE_ARGS := \
 	$(addprefix --second ,$(INSTALLED_2NDBOOTLOADER_TARGET)) \
@@ -1330,7 +1326,7 @@ DISTTOOLS += \
   $(HOST_LIBRARY_PATH)/libext2_uuid_host$(HOST_SHLIB_SUFFIX)
 
 OTATOOLS := $(DISTTOOLS) \
-  $(HOST_OUT_EXECUTABLES)/aapt
+  $ANDROID_HOME/build-tools/34.0.0/aapt
 
 .PHONY: otatools
 otatools: $(OTATOOLS)
@@ -1380,12 +1376,6 @@ define package_files-copy-root
   fi
 endef
 
-built_ota_tools := \
-	$(call intermediates-dir-for,EXECUTABLES,applypatch,,,$(TARGET_PREFER_32_BIT))/applypatch \
-	$(call intermediates-dir-for,EXECUTABLES,applypatch_static,,,$(TARGET_PREFER_32_BIT))/applypatch_static \
-	$(call intermediates-dir-for,EXECUTABLES,check_prereq,,,$(TARGET_PREFER_32_BIT))/check_prereq \
-	$(call intermediates-dir-for,EXECUTABLES,sqlite3,,,$(TARGET_PREFER_32_BIT))/sqlite3 \
-	$(call intermediates-dir-for,EXECUTABLES,updater,,,$(TARGET_PREFER_32_BIT))/updater
 $(BUILT_TARGET_FILES_PACKAGE): PRIVATE_OTA_TOOLS := $(built_ota_tools)
 
 $(BUILT_TARGET_FILES_PACKAGE): PRIVATE_RECOVERY_API_VERSION := $(RECOVERY_API_VERSION)

@@ -17,7 +17,7 @@
 # This is a build configuration for a very minimal build of the
 # Open-Source part of the tree.
 
-PRODUCT_PACKAGES += \
+## PRODUCT_PACKAGES += \
     adb \
     adbd \
     atrace \
@@ -73,7 +73,7 @@ PRODUCT_PACKAGES += \
     tzdatacheck \
 
 # SELinux packages
-PRODUCT_PACKAGES += \
+## PRODUCT_PACKAGES += \
     sepolicy \
     file_contexts \
     seapp_contexts \
@@ -84,10 +84,10 @@ PRODUCT_PACKAGES += \
 
 # Ensure that this property is always defined so that bionic_systrace.cpp
 # can rely on it being initially set by init.
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+## PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     debug.atrace.tags.enableflags=0
 
-PRODUCT_COPY_FILES += \
+## PRODUCT_COPY_FILES += \
     system/core/rootdir/init.usb.rc:root/init.usb.rc \
     system/core/rootdir/init.usb.configfs.rc:root/init.usb.configfs.rc \
     system/core/rootdir/init.trace.rc:root/init.trace.rc \

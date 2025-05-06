@@ -15,15 +15,15 @@
 
 #
 # This file is included by other product makefiles to add all the
-# emulator-related modules to PRODUCT_PACKAGES.
+# emulator-related modules to # PRODUCT_PACKAGES.
 #
 
 # Host modules
-PRODUCT_PACKAGES += \
+## PRODUCT_PACKAGES += \
 
 
 # Device modules
-PRODUCT_PACKAGES += \
+## PRODUCT_PACKAGES += \
     egl.cfg \
     gralloc.goldfish \
     libGLESv1_CM_emulation \
@@ -49,7 +49,7 @@ PRODUCT_PACKAGES += \
     fingerprintd \
     sensors.ranchu
 
-PRODUCT_COPY_FILES += \
+## PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.ethernet.xml:system/etc/permissions/android.hardware.ethernet.xml \
     device/generic/goldfish/fstab.goldfish:root/fstab.goldfish \
     device/generic/goldfish/init.goldfish.rc:root/init.goldfish.rc \

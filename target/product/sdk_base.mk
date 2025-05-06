@@ -14,9 +14,9 @@
 # limitations under the License.
 #
 
-PRODUCT_PROPERTY_OVERRIDES :=
+# PRODUCT_PROPERTY_OVERRIDES :=
 
-PRODUCT_PACKAGES := \
+# PRODUCT_PACKAGES := \
 	ApiDemos \
 	CubeLiveWallpapers \
 	CustomLocale \
@@ -52,14 +52,14 @@ PRODUCT_PACKAGES := \
 -include development/build/product_sdk.mk
 
 # audio libraries.
-PRODUCT_PACKAGES += \
+# PRODUCT_PACKAGES += \
 	audio.primary.goldfish \
 	audio_policy.default \
 	local_time.default
 
-PRODUCT_PACKAGE_OVERLAYS := development/sdk_overlay
+# PRODUCT_PACKAGE_OVERLAYS := development/sdk_overlay
 
-PRODUCT_COPY_FILES := \
+# PRODUCT_COPY_FILES := \
 	device/generic/goldfish/data/etc/apns-conf.xml:system/etc/apns-conf.xml \
 	frameworks/base/data/sounds/effects/camera_click.ogg:system/media/audio/ui/camera_click.ogg \
 	frameworks/base/data/sounds/effects/VideoRecord.ogg:system/media/audio/ui/VideoRecord.ogg \
@@ -99,7 +99,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core.mk)
 
 # locale. en_US is both first and in alphabetical order to
 # ensure this is the default locale.
-PRODUCT_LOCALES := \
+# PRODUCT_LOCALES := \
 	en_US \
 	ar_EG \
 	ar_IL \

@@ -89,12 +89,12 @@ $(full_classes_jarjar_jar): $(full_classes_compiled_jar) $(LOCAL_JARJAR_RULES) |
 	@echo JarJar: $@
 	$(hide) java -jar $(JARJAR) process $(PRIVATE_JARJAR_RULES) $< $@
 else
-$(full_classes_jarjar_jar): $(full_classes_compiled_jar) | $(ACP)
+$(full_classes_jarjar_jar): $(full_classes_compiled_jar)
 	@echo Copying: $@
 	$(hide) $(ACP) -fp $< $@
 endif
 
-$(full_classes_jar): $(full_classes_jarjar_jar) | $(ACP)
+$(full_classes_jar): $(full_classes_jarjar_jar)
 	@echo Copying: $@
 	$(hide) $(ACP) -fp $< $@
 

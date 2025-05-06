@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env tauthon
 # This file uses the following encoding: utf-8
 
 import sys

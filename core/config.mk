@@ -222,9 +222,9 @@ $(call validate-kernel-headers,$(TARGET_PRODUCT_KERNEL_HEADERS))
 # Clean up/verify variables defined by the board config file.
 TARGET_BOOTLOADER_BOARD_NAME := $(strip $(TARGET_BOOTLOADER_BOARD_NAME))
 TARGET_CPU_ABI := $(strip $(TARGET_CPU_ABI))
-ifeq ($(TARGET_CPU_ABI),)
-  $(error No TARGET_CPU_ABI defined by board config: $(board_config_mk))
-endif
+#ifeq ($(TARGET_CPU_ABI),)
+#  $(error No TARGET_CPU_ABI defined by board config: $(board_config_mk))
+#endif
 TARGET_CPU_ABI2 := $(strip $(TARGET_CPU_ABI2))
 
 # $(1): os/arch
@@ -396,10 +396,11 @@ YACC := $(BISON) -d
 YASM := prebuilts/misc/$(BUILD_OS)-$(HOST_PREBUILT_ARCH)/yasm/yasm
 
 DOXYGEN:= doxygen
+HOST_OUT_EXECUTABLES := $(ANDROID_HOME)/build-tools/34.0.0
 AAPT := $(HOST_OUT_EXECUTABLES)/aapt$(HOST_EXECUTABLE_SUFFIX)
 AIDL := $(HOST_OUT_EXECUTABLES)/aidl$(HOST_EXECUTABLE_SUFFIX)
 PROTOC := $(HOST_OUT_EXECUTABLES)/aprotoc$(HOST_EXECUTABLE_SUFFIX)
-SIGNAPK_JAR := $(HOST_OUT_JAVA_LIBRARIES)/signapk$(COMMON_JAVA_PACKAGE_SUFFIX)
+SIGNAPK_JAR := prebuilts/signapk.jar #$(HOST_OUT_JAVA_LIBRARIES)/signapk$(COMMON_JAVA_PACKAGE_SUFFIX)
 MKBOOTFS := $(HOST_OUT_EXECUTABLES)/mkbootfs$(HOST_EXECUTABLE_SUFFIX)
 MINIGZIP := $(HOST_OUT_EXECUTABLES)/minigzip$(HOST_EXECUTABLE_SUFFIX)
 ifeq (,$(strip $(BOARD_CUSTOM_MKBOOTIMG)))
@@ -477,11 +478,15 @@ FUTILITY := prebuilts/misc/$(BUILD_OS)-$(HOST_PREBUILT_ARCH)/futility/futility
 VBOOT_SIGNER := prebuilts/misc/scripts/vboot_signer/vboot_signer.sh
 
 # ACP is always for the build OS, not for the host OS
-ACP := $(BUILD_OUT_EXECUTABLES)/acp$(BUILD_EXECUTABLE_SUFFIX)
+# ACP is just a glorified cp command
+ACP := cp # $(BUILD_OUT_EXECUTABLES)/acp$(BUILD_EXECUTABLE_SUFFIX)
+
+$(ACP):
+	@true
 
 # dx is java behind a shell script; no .exe necessary.
-DX := $(HOST_OUT_EXECUTABLES)/dx
-ZIPALIGN := $(HOST_OUT_EXECUTABLES)/zipalign$(HOST_EXECUTABLE_SUFFIX)
+DX := $(ANDROID_HOME)/build-tools/34.0.0/d8 #$(HOST_OUT_EXECUTABLES)/dx
+ZIPALIGN := $(ANDROID_HOME)/build-tools/34.0.0/zipalign # $(HOST_OUT_EXECUTABLES)/zipalign$(HOST_EXECUTABLE_SUFFIX)
 
 # relocation packer
 RELOCATION_PACKER := prebuilts/misc/$(BUILD_OS)-$(HOST_PREBUILT_ARCH)/relocation_packer/relocation_packer
@@ -502,13 +507,13 @@ else
 COLUMN:= column
 endif
 
-HOST_JDK_TOOLS_JAR:= $(shell $(BUILD_SYSTEM)/find-jdk-tools-jar.sh)
+#HOST_JDK_TOOLS_JAR:= $(shell $(BUILD_SYSTEM)/find-jdk-tools-jar.sh)
 
-ifneq ($(HOST_JDK_TOOLS_JAR),)
-ifeq ($(wildcard $(HOST_JDK_TOOLS_JAR)),)
-$(error Error: could not find jdk tools.jar, please check if your JDK was installed correctly)
-endif
-endif
+#ifneq ($(HOST_JDK_TOOLS_JAR),)
+#ifeq ($(wildcard $(HOST_JDK_TOOLS_JAR)),)
+#$(error Error: could not find jdk tools.jar, please check if your JDK was installed correctly)
+#endif
+#endif
 
 # Is the host JDK 64-bit version?
 HOST_JDK_IS_64BIT_VERSION :=

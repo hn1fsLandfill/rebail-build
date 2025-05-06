@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env tauthon
 # vim: ts=2 sw=2 nocindent
 
 import re

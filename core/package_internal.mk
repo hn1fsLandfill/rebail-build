@@ -149,15 +149,15 @@ LOCAL_BUILT_MODULE_STEM := package.apk
 LOCAL_INSTALLED_MODULE_STEM := $(LOCAL_MODULE).apk
 
 LOCAL_PROGUARD_ENABLED:=$(strip $(LOCAL_PROGUARD_ENABLED))
-ifndef LOCAL_PROGUARD_ENABLED
-ifneq ($(DISABLE_PROGUARD),true)
-    LOCAL_PROGUARD_ENABLED :=full
-endif
-endif
-ifeq ($(LOCAL_PROGUARD_ENABLED),disabled)
+#ifndef LOCAL_PROGUARD_ENABLED
+#ifneq ($(DISABLE_PROGUARD),true)
+#    LOCAL_PROGUARD_ENABLED :=full
+#endif
+#endif
+#ifeq ($(LOCAL_PROGUARD_ENABLED),disabled)
     # the package explicitly request to disable proguard.
     LOCAL_PROGUARD_ENABLED :=
-endif
+#endif
 proguard_options_file :=
 ifneq ($(LOCAL_PROGUARD_ENABLED),custom)
 ifeq ($(need_compile_res),true)
@@ -239,7 +239,7 @@ ifeq ($(need_compile_res),true)
 $(R_file_stamp): PRIVATE_RESOURCE_PUBLICS_OUTPUT := \
 			$(intermediates.COMMON)/public_resources.xml
 $(R_file_stamp): PRIVATE_PROGUARD_OPTIONS_FILE := $(proguard_options_file)
-$(R_file_stamp): $(all_res_assets) $(full_android_manifest) $(RenderScript_file_stamp) $(AAPT) | $(ACP)
+$(R_file_stamp): $(all_res_assets) $(full_android_manifest) $(RenderScript_file_stamp) $(AAPT)
 	@echo "target R.java/Manifest.java: $(PRIVATE_MODULE) ($@)"
 	@rm -f $@
 	$(create-resource-java-files)
@@ -312,20 +312,20 @@ else
 # Most packages should link against the resources defined by framework-res.
 # Even if they don't have their own resources, they may use framework
 # resources.
-ifneq ($(filter-out current system_current,$(LOCAL_SDK_RES_VERSION))$(if $(TARGET_BUILD_APPS),$(filter current system_current,$(LOCAL_SDK_RES_VERSION))),)
+#ifneq ($(filter-out current system_current,$(LOCAL_SDK_RES_VERSION))$(if $(TARGET_BUILD_APPS),$(filter current system_current,$(LOCAL_SDK_RES_VERSION))),)
 # for released sdk versions, the platform resources were built into android.jar.
 framework_res_package_export := \
     $(HISTORICAL_SDK_VERSIONS_ROOT)/$(LOCAL_SDK_RES_VERSION)/android.jar
 framework_res_package_export_deps := $(framework_res_package_export)
-else # LOCAL_SDK_RES_VERSION
-framework_res_package_export := \
+#else # LOCAL_SDK_RES_VERSION
+#framework_res_package_export := \
     $(call intermediates-dir-for,APPS,framework-res,,COMMON)/package-export.apk
 # We can't depend directly on the export.apk file; it won't get its
 # PRIVATE_ vars set up correctly if we do.  Instead, depend on the
 # corresponding R.stamp file, which lists the export.apk as a dependency.
-framework_res_package_export_deps := \
+#framework_res_package_export_deps := \
     $(dir $(framework_res_package_export))src/R.stamp
-endif # LOCAL_SDK_RES_VERSION
+#endif # LOCAL_SDK_RES_VERSION
 all_library_res_package_exports := \
     $(framework_res_package_export) \
     $(foreach lib,$(LOCAL_RES_LIBRARIES),\
@@ -387,7 +387,7 @@ $(LOCAL_BUILT_MODULE): PRIVATE_ADDITIONAL_CERTIFICATES := $(foreach c,\
     $(LOCAL_ADDITIONAL_CERTIFICATES), $(c).x509.pem $(c).pk8)
 
 # Define the rule to build the actual package.
-$(LOCAL_BUILT_MODULE): $(AAPT) | $(ZIPALIGN)
+$(LOCAL_BUILT_MODULE): $(AAPT)
 # PRIVATE_JNI_SHARED_LIBRARIES is a list of <abi>:<path_of_built_lib>.
 $(LOCAL_BUILT_MODULE): PRIVATE_JNI_SHARED_LIBRARIES := $(jni_shared_libraries_with_abis)
 # PRIVATE_JNI_SHARED_LIBRARIES_ABI is a list of ABI names.
@@ -520,7 +520,7 @@ $(foreach f, $(jni_shared_libraries), \
 
 apk_jni_stripped := $(intermediates)/jni_stripped/package.apk
 $(apk_jni_stripped): PRIVATE_JNI_SHARED_LIBRARIES := $(notdir $(jni_shared_libraries))
-$(apk_jni_stripped) : $(LOCAL_BUILT_MODULE) | $(ZIPALIGN)
+$(apk_jni_stripped) : $(LOCAL_BUILT_MODULE)
 	@rm -rf $(dir $@) && mkdir -p $(dir $@)
 	$(hide) cp $< $@
 	$(hide) zip -d $@ $(foreach f,$(PRIVATE_JNI_SHARED_LIBRARIES),\*/$(f))

@@ -15,7 +15,7 @@
 #
 
 # Base modules (will move elsewhere, previously user tagged)
-PRODUCT_PACKAGES += \
+# PRODUCT_PACKAGES += \
     20-dns.conf \
     95-configured \
     org.apache.http.legacy.boot \
@@ -124,12 +124,12 @@ PRODUCT_PACKAGES += \
     wm
 
 
-PRODUCT_COPY_FILES := $(call add-to-product-copy-files-if-exists,\
+# PRODUCT_COPY_FILES := $(call add-to-product-copy-files-if-exists,\
     frameworks/base/preloaded-classes:system/etc/preloaded-classes)
 
 # Note: it is acceptable to not have a compiled-classes file. In that case, all boot classpath
 #       classes will be compiled.
-PRODUCT_COPY_FILES += $(call add-to-product-copy-files-if-exists,\
+# PRODUCT_COPY_FILES += $(call add-to-product-copy-files-if-exists,\
     frameworks/base/compiled-classes:system/etc/compiled-classes)
 
 

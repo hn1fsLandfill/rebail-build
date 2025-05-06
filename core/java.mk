@@ -3,6 +3,9 @@
 # LOCAL_MODULE_CLASS
 # all_res_assets
 
+TARGET_AVAILABLE_SDK_VERSIONS := current
+
+
 ifeq ($(TARGET_BUILD_PDK),true)
 ifeq ($(TARGET_BUILD_PDK_JAVA_PLATFORM),)
 # LOCAL_SDK not defined or set to current
@@ -24,15 +27,6 @@ ifneq ($(LOCAL_SDK_VERSION),)
     ifeq ($(strip $(filter $(LOCAL_SDK_VERSION),$(TARGET_AVAILABLE_SDK_VERSIONS))),)
       $(error $(LOCAL_PATH): Invalid LOCAL_SDK_VERSION '$(LOCAL_SDK_VERSION)' \
              Choices are: $(TARGET_AVAILABLE_SDK_VERSIONS))
-    else
-      ifeq ($(LOCAL_SDK_VERSION)$(TARGET_BUILD_APPS),current)
-        # Use android_stubs_current if LOCAL_SDK_VERSION is current and no TARGET_BUILD_APPS.
-        LOCAL_JAVA_LIBRARIES := android_stubs_current $(LOCAL_JAVA_LIBRARIES)
-      else ifeq ($(LOCAL_SDK_VERSION)$(TARGET_BUILD_APPS),system_current)
-        LOCAL_JAVA_LIBRARIES := android_system_stubs_current $(LOCAL_JAVA_LIBRARIES)
-      else
-        LOCAL_JAVA_LIBRARIES := sdk_v$(LOCAL_SDK_VERSION) $(LOCAL_JAVA_LIBRARIES)
-      endif
     endif
   endif
 else
@@ -357,7 +351,7 @@ ifdef full_classes_jar
 # - This extra copy, with the dependency on LOCAL_BUILT_MODULE allows the
 #   PRIVATE_ vars to be preserved.
 $(full_classes_stubs_jar): PRIVATE_SOURCE_FILE := $(full_classes_jar)
-$(full_classes_stubs_jar) : $(full_classes_jar) | $(ACP)
+$(full_classes_stubs_jar) : $(full_classes_jar)
 	@echo Copying $(PRIVATE_SOURCE_FILE)
 	$(hide) $(ACP) -fp $(PRIVATE_SOURCE_FILE) $@
 ALL_MODULES.$(LOCAL_MODULE).STUBS := $(full_classes_stubs_jar)
@@ -402,7 +396,7 @@ $(full_classes_jarjar_jar): $(full_classes_compiled_jar) $(LOCAL_JARJAR_RULES) |
 	@echo JarJar: $@
 	$(hide) java -jar $(JARJAR) process $(PRIVATE_JARJAR_RULES) $< $@
 else
-$(full_classes_jarjar_jar): $(full_classes_compiled_jar) | $(ACP)
+$(full_classes_jarjar_jar): $(full_classes_compiled_jar)
 	@echo Copying: $@
 	$(hide) $(ACP) -fp $< $@
 endif
@@ -425,13 +419,13 @@ $(full_classes_emma_jar): $(full_classes_jarjar_jar) | $(EMMA_JAR)
 	$(transform-classes.jar-to-emma)
 
 else
-$(full_classes_emma_jar): $(full_classes_jarjar_jar) | $(ACP)
+$(full_classes_emma_jar): $(full_classes_jarjar_jar)
 	@echo Copying: $@
 	$(copy-file-to-target)
 endif
 
 # Keep a copy of the jar just before proguard processing.
-$(full_classes_jar): $(full_classes_emma_jar) | $(ACP)
+$(full_classes_jar): $(full_classes_emma_jar)
 	@echo Copying: $@
 	$(hide) $(ACP) -fp $< $@
 
@@ -532,7 +526,7 @@ extra_input_jar :=
 endif
 $(full_classes_proguard_jar): PRIVATE_EXTRA_INPUT_JAR := $(extra_input_jar)
 $(full_classes_proguard_jar): PRIVATE_PROGUARD_FLAGS := $(legacy_proguard_flags) $(common_proguard_flags) $(LOCAL_PROGUARD_FLAGS)
-$(full_classes_proguard_jar) : $(full_classes_jar) $(extra_input_jar) $(my_support_library_sdk_raise) $(proguard_flag_files) | $(ACP) $(PROGUARD)
+$(full_classes_proguard_jar) : $(full_classes_jar) $(extra_input_jar) $(my_support_library_sdk_raise) $(proguard_flag_files) | $(PROGUARD)
 	$(call transform-jar-to-proguard)
 
 else  # LOCAL_PROGUARD_ENABLED not defined
@@ -560,7 +554,7 @@ $(built_dex_intermediate): $(full_classes_proguard_jar) $(DX)
 	$(transform-classes.jar-to-dex)
 endif # LOCAL_JACK_ENABLED is disabled
 
-$(built_dex): $(built_dex_intermediate) | $(ACP)
+$(built_dex): $(built_dex_intermediate)
 	@echo Copying: $@
 	$(hide) mkdir -p $(dir $@)
 	$(hide) rm -f $(dir $@)/classes*.dex

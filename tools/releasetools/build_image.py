@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env tauthon
 #
 # Copyright (C) 2011 The Android Open Source Project
 #

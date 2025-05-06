@@ -18,4 +18,4 @@
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/sdk_phone_mips.mk)
 
-PRODUCT_NAME := sdk_mips
+# PRODUCT_NAME := sdk_mips

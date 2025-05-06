@@ -17,7 +17,7 @@
 # This is a generic phone product that isn't specialized for a specific device.
 # It includes the base Android platform.
 
-PRODUCT_PACKAGES := \
+# PRODUCT_PACKAGES := \
     Bluetooth \
     BluetoothMidiService \
     Camera2 \
@@ -29,13 +29,13 @@ PRODUCT_PACKAGES := \
     SystemUI \
     WallpaperCropper
 
-PRODUCT_PACKAGES += \
+# PRODUCT_PACKAGES += \
     clatd \
     clatd.conf \
     pppd \
     screenrecord
 
-PRODUCT_PACKAGES += \
+# PRODUCT_PACKAGES += \
     librs_jni \
     libvideoeditor_jni \
     libvideoeditor_core \
@@ -43,17 +43,17 @@ PRODUCT_PACKAGES += \
     libvideoeditor_videofilters \
     libvideoeditorplayer \
 
-PRODUCT_PACKAGES += \
+# PRODUCT_PACKAGES += \
     audio.primary.default \
     audio_policy.default \
     local_time.default \
     vibrator.default \
     power.default
 
-PRODUCT_COPY_FILES := \
+# PRODUCT_COPY_FILES := \
         frameworks/av/media/libeffects/data/audio_effects.conf:system/etc/audio_effects.conf
 
-PRODUCT_PROPERTY_OVERRIDES += \
+# PRODUCT_PROPERTY_OVERRIDES += \
     ro.carrier=unknown
 
 $(call inherit-product-if-exists, frameworks/base/data/fonts/fonts.mk)
@@ -70,6 +70,6 @@ $(call inherit-product-if-exists, frameworks/webview/chromium/chromium.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core.mk)
 
 # Overrides
-PRODUCT_BRAND := generic
-PRODUCT_DEVICE := generic
-PRODUCT_NAME := generic_no_telephony
+# PRODUCT_BRAND := generic
+# PRODUCT_DEVICE := generic
+# PRODUCT_NAME := generic_no_telephony

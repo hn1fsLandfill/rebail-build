@@ -15,4 +15,4 @@
 #
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_x86.mk)
 
-PRODUCT_NAME := aosp_x86
+# PRODUCT_NAME := aosp_x86

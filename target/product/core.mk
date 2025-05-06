@@ -20,7 +20,7 @@
 # core_minimal.mk instead. If you care about wearables, you need to modify
 # core_tiny.mk in addition to core_minimal.mk.
 
-PRODUCT_PACKAGES += \
+# PRODUCT_PACKAGES += \
     BasicDreams \
     Browser \
     Calendar \

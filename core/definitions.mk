@@ -870,7 +870,6 @@ define dump-module-variables
 @echo PRIVATE_ALL_STATIC_LIBRARIES=$(PRIVATE_ALL_STATIC_LIBRARIES);
 @echo PRIVATE_ALL_WHOLE_STATIC_LIBRARIES=$(PRIVATE_ALL_WHOLE_STATIC_LIBRARIES);
 @echo PRIVATE_ALL_OBJECTS=$(PRIVATE_ALL_OBJECTS);
-@echo PRIVATE_NO_CRT=$(PRIVATE_NO_CRT);
 endef
 
 ###########################################################
@@ -1478,7 +1477,6 @@ $(hide) $(PRIVATE_CXX) \
 	-Wl,--gc-sections \
 	$(if $(filter true,$(PRIVATE_CLANG)),-shared,-Wl$(comma)-shared) \
 	$(PRIVATE_TARGET_GLOBAL_LD_DIRS) \
-	$(if $(filter true,$(PRIVATE_NO_CRT)),,$(PRIVATE_TARGET_CRTBEGIN_SO_O)) \
 	$(PRIVATE_ALL_OBJECTS) \
 	-Wl,--whole-archive \
 	$(call normalize-target-libraries,$(PRIVATE_ALL_WHOLE_STATIC_LIBRARIES)) \
@@ -1494,7 +1492,6 @@ $(hide) $(PRIVATE_CXX) \
 	-o $@ \
 	$(PRIVATE_TARGET_GLOBAL_LDFLAGS) \
 	$(PRIVATE_LDFLAGS) \
-	$(if $(filter true,$(PRIVATE_NO_CRT)),,$(PRIVATE_TARGET_CRTEND_SO_O)) \
 	$(PRIVATE_LDLIBS)
 endef
 
@@ -1551,7 +1548,6 @@ $(hide) $(PRIVATE_CXX) -pie \
 	-Wl,-z,nocopyreloc \
 	$(PRIVATE_TARGET_GLOBAL_LD_DIRS) \
 	-Wl,-rpath-link=$(PRIVATE_TARGET_OUT_INTERMEDIATE_LIBRARIES) \
-	$(if $(filter true,$(PRIVATE_NO_CRT)),,$(PRIVATE_TARGET_CRTBEGIN_DYNAMIC_O)) \
 	$(PRIVATE_ALL_OBJECTS) \
 	-Wl,--whole-archive \
 	$(call normalize-target-libraries,$(PRIVATE_ALL_WHOLE_STATIC_LIBRARIES)) \
@@ -1567,7 +1563,6 @@ $(hide) $(PRIVATE_CXX) -pie \
 	-o $@ \
 	$(PRIVATE_TARGET_GLOBAL_LDFLAGS) \
 	$(PRIVATE_LDFLAGS) \
-	$(if $(filter true,$(PRIVATE_NO_CRT)),,$(PRIVATE_TARGET_CRTEND_O)) \
 	$(PRIVATE_LDLIBS)
 endef
 
@@ -1595,7 +1590,6 @@ $(hide) $(PRIVATE_CXX) \
 	-Wl,--gc-sections \
 	-o $@ \
 	$(PRIVATE_TARGET_GLOBAL_LD_DIRS) \
-	$(if $(filter true,$(PRIVATE_NO_CRT)),,$(PRIVATE_TARGET_CRTBEGIN_STATIC_O)) \
 	$(PRIVATE_TARGET_GLOBAL_LDFLAGS) \
 	$(PRIVATE_LDFLAGS) \
 	$(PRIVATE_ALL_OBJECTS) \
@@ -1611,8 +1605,7 @@ $(hide) $(PRIVATE_CXX) \
 	$(PRIVATE_TARGET_LIBATOMIC) \
 	$(call normalize-target-libraries,$(filter %libcompiler_rt.a,$(PRIVATE_ALL_STATIC_LIBRARIES))) \
 	$(PRIVATE_TARGET_LIBGCC) \
-	-Wl,--end-group \
-	$(if $(filter true,$(PRIVATE_NO_CRT)),,$(PRIVATE_TARGET_CRTEND_O))
+	-Wl,--end-group
 endef
 
 define transform-o-to-static-executable
@@ -1983,6 +1976,8 @@ $(hide) java -classpath $(EMMA_JAR) emma instr -outmode fullcopy -outfile \
     $(addprefix -ix , $(PRIVATE_EMMA_COVERAGE_FILTER))
 endef
 
+# --lib $(ANDROID_HOME)/platforms/android-34/android.jar \
+
 #TODO: use a smaller -Xmx value for most libraries;
 #      only core.jar and framework.jar need a heap this big.
 # Avoid the memory arguments on Windows, dx fails to load for some reason with them.
@@ -1992,7 +1987,8 @@ define transform-classes.jar-to-dex
 $(hide) rm -f $(dir $@)classes*.dex
 $(hide) $(DX) \
     $(if $(findstring windows,$(HOST_OS)),,-JXms16M -JXmx2048M) \
-    --dex --output=$(dir $@) \
+    --output $(dir $@) \
+    --lib prebuilts/sdk/current/android.jar \
     $(if $(NO_OPTIMIZE_DX), \
         --no-optimize) \
     $(if $(GENERATE_DEX_DEBUG), \
@@ -2120,7 +2116,7 @@ endef
 #
 define sign-package
 $(hide) mv $@ $@.unsigned
-$(hide) java -jar $(SIGNAPK_JAR) \
+$(hide) java -Djava.library.path=prebuilts/lib -jar $(SIGNAPK_JAR) \
     $(PRIVATE_CERTIFICATE) $(PRIVATE_PRIVATE_KEY) \
     $(PRIVATE_ADDITIONAL_CERTIFICATES) $@.unsigned $@.signed
 $(hide) mv $@.signed $@
@@ -2324,9 +2320,9 @@ endef
 ###########################################################
 
 # $(1): The file to check
-ifndef get-file-size
-$(error HOST_OS must define get-file-size)
-endif
+#ifndef get-file-size
+#$(error HOST_OS must define get-file-size)
+#endif
 
 # Convert a partition data size (eg, as reported in /proc/mtd) to the
 # size of the image used to flash that partition (which includes a

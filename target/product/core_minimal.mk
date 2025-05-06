@@ -18,11 +18,11 @@
 # things that are specific to communication devices (phones, tables,
 # etc.) here -- for that, use core.mk.
 
-PRODUCT_BRAND := generic
-PRODUCT_DEVICE := generic
-PRODUCT_NAME := core
+# # PRODUCT_BRAND := generic
+# # PRODUCT_DEVICE := generic
+# # PRODUCT_NAME := core
 
-PRODUCT_PACKAGES += \
+# # PRODUCT_PACKAGES += \
     BackupRestoreConfirmation \
     DownloadProvider \
     HTMLViewer \
@@ -78,11 +78,11 @@ PRODUCT_PACKAGES += \
     webview \
     wifi-service
 
-PRODUCT_COPY_FILES += \
+# # PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.webview.xml:system/etc/permissions/android.software.webview.xml
 
-# The order of PRODUCT_BOOT_JARS matters.
-PRODUCT_BOOT_JARS := \
+# The order of # # PRODUCT_BOOT_JARS matters.
+# # PRODUCT_BOOT_JARS := \
     core-libart \
     conscrypt \
     okhttp \
@@ -96,23 +96,23 @@ PRODUCT_BOOT_JARS := \
     apache-xml \
     org.apache.http.legacy.boot
 
-# The order of PRODUCT_SYSTEM_SERVER_JARS matters.
-PRODUCT_SYSTEM_SERVER_JARS := \
+# The order of # # PRODUCT_SYSTEM_SERVER_JARS matters.
+# # PRODUCT_SYSTEM_SERVER_JARS := \
     services \
     ethernet-service \
     wifi-service
 
 # Adoptable external storage supports both ext4 and f2fs
-PRODUCT_PACKAGES += \
+# # PRODUCT_PACKAGES += \
     e2fsck \
     make_ext4fs \
     fsck.f2fs \
     make_f2fs \
 
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+# # PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.zygote=zygote32
-PRODUCT_COPY_FILES += \
+# # PRODUCT_COPY_FILES += \
     system/core/rootdir/init.zygote32.rc:root/init.zygote32.rc
 
-$(call inherit-product, $(SRC_TARGET_DIR)/product/runtime_libart.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
+#$(call inherit-product, $(SRC_TARGET_DIR)/product/runtime_libart.mk)
+#$(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)

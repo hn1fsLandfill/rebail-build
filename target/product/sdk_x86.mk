@@ -18,4 +18,4 @@
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/sdk_phone_x86.mk)
 
-PRODUCT_NAME := sdk_x86
+# PRODUCT_NAME := sdk_x86

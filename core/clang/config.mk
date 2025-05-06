@@ -119,22 +119,22 @@ CLANG_DEFAULT_UB_CHECKS := \
 
 # HOST config
 clang_2nd_arch_prefix :=
-include $(BUILD_SYSTEM)/clang/HOST_$(HOST_ARCH).mk
+#include $(BUILD_SYSTEM)/clang/HOST_$(HOST_ARCH).mk
 
 # HOST_2ND_ARCH config
 ifdef HOST_2ND_ARCH
 clang_2nd_arch_prefix := $(HOST_2ND_ARCH_VAR_PREFIX)
-include $(BUILD_SYSTEM)/clang/HOST_$(HOST_2ND_ARCH).mk
+#include $(BUILD_SYSTEM)/clang/HOST_$(HOST_2ND_ARCH).mk
 endif
 
 # TARGET config
 clang_2nd_arch_prefix :=
-include $(BUILD_SYSTEM)/clang/TARGET_$(TARGET_ARCH).mk
+#include $(BUILD_SYSTEM)/clang/TARGET_$(TARGET_ARCH).mk
 
 # TARGET_2ND_ARCH config
 ifdef TARGET_2ND_ARCH
 clang_2nd_arch_prefix := $(TARGET_2ND_ARCH_VAR_PREFIX)
-include $(BUILD_SYSTEM)/clang/TARGET_$(TARGET_2ND_ARCH).mk
+#include $(BUILD_SYSTEM)/clang/TARGET_$(TARGET_2ND_ARCH).mk
 endif
 
 ADDRESS_SANITIZER_CONFIG_EXTRA_CFLAGS := -fno-omit-frame-pointer
