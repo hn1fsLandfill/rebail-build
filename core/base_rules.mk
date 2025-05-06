@@ -401,7 +401,7 @@ $(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_JAVA_OBJECTS := $(patsubst %.java,%.class
 #else
 #ifeq ($(LOCAL_SDK_VERSION)$(TARGET_BUILD_APPS),current)
 # LOCAL_SDK_VERSION is current and no TARGET_BUILD_APPS.
-$(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_BOOTCLASSPATH := -cp $(ANDROID_HOME)/platforms/android-34/android.jar # $(call java-lib-files,android_stubs_current)
+$(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_BOOTCLASSPATHS := -cp prebuilts/sdk/current/android.jar # $(call java-lib-files,android_stubs_current)
 #else ifeq ($(LOCAL_SDK_VERSION)$(TARGET_BUILD_APPS),system_current)
 #$(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_BOOTCLASSPATH := -bootclasspath $(call java-lib-files,android_system_stubs_current)
 #else
@@ -436,7 +436,7 @@ else # !LOCAL_IS_HOST_MODULE
 full_shared_java_libs := $(call java-lib-files,$(LOCAL_JAVA_LIBRARIES),$(LOCAL_IS_HOST_MODULE))
 full_java_lib_deps := $(call java-lib-deps,$(LOCAL_JAVA_LIBRARIES),$(LOCAL_IS_HOST_MODULE))
 endif # !LOCAL_IS_HOST_MODULE
-full_java_libs := $(full_shared_java_libs) $(full_static_java_libs) $(LOCAL_CLASSPATH)
+full_java_libs := prebuilts/sdk/current/android.jar $(full_shared_java_libs) $(full_static_java_libs) $(LOCAL_CLASSPATH)
 full_java_lib_deps += $(full_static_java_libs) $(LOCAL_CLASSPATH)
 
 # This is set by packages that are linking to other packages that export
