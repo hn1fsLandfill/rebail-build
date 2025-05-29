@@ -21,6 +21,12 @@ else
 JAVACC := $(ALTERNATE_JAVAC)
 endif
 
+ifeq ($(ALTERNATE_KOTLINC),)
+KOTLINCC := kotlinc
+else
+KOTLINCC := $(ALTERNATE_KOTLINC)
+endif
+
 # The actual compiler can be wrapped by setting the JAVAC_WRAPPER var.
 ifdef JAVAC_WRAPPER
     ifneq ($(JAVAC_WRAPPER),$(firstword $(JAVACC)))
@@ -34,6 +40,7 @@ ifeq ($(BUILD_OS), windows)
         $(common_jdk_flags)
 else
     COMMON_JAVAC := $(JAVACC) -J-Xmx1024M $(common_jdk_flags)
+    COMMON_KOTLINC := $(KOTLINCC) -J-Xmx1024M $(common_jdk_flags)
 endif
 
 # Eclipse.
@@ -45,6 +52,7 @@ endif
 
 HOST_JAVAC ?= $(COMMON_JAVAC)
 TARGET_JAVAC ?= $(COMMON_JAVAC)
+TARGET_KOTLINC ?= $(COMMON_KOTLINC)
 
 #$(info HOST_JAVAC=$(HOST_JAVAC))
 #$(info TARGET_JAVAC=$(TARGET_JAVAC))

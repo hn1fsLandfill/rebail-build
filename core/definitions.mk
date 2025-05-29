@@ -1857,36 +1857,19 @@ $(hide) if [ -s $(PRIVATE_CLASS_INTERMEDIATES_DIR)/kotlin-source-list-uniq ] ; t
     $(if $(findstring true,$(PRIVATE_WARNINGS_ENABLE)),$(xlint_unchecked),) \
     -extdirs "" -d $(PRIVATE_CLASS_INTERMEDIATES_DIR) \
     $(PRIVATE_JAVACFLAGS) \
-    \@$(PRIVATE_CLASS_INTERMEDIATES_DIR)/java-source-list-uniq \
+    \@$(PRIVATE_CLASS_INTERMEDIATES_DIR)/kotlin-source-list-uniq \
     || ( rm -rf $(PRIVATE_CLASS_INTERMEDIATES_DIR) ; exit 41 ) \
 fi
 $(if $(PRIVATE_JAVA_LAYERS_FILE), $(hide) build/tools/java-layers.py \
     $(PRIVATE_JAVA_LAYERS_FILE) \@$(PRIVATE_CLASS_INTERMEDIATES_DIR)/java-source-list-uniq,)
-$(hide) rm -f $(PRIVATE_CLASS_INTERMEDIATES_DIR)/java-source-list
-$(hide) rm -f $(PRIVATE_CLASS_INTERMEDIATES_DIR)/java-source-list-uniq
-$(if $(PRIVATE_JAR_EXCLUDE_FILES), $(hide) find $(PRIVATE_CLASS_INTERMEDIATES_DIR) \
-    -name $(word 1, $(PRIVATE_JAR_EXCLUDE_FILES)) \
-    $(addprefix -o -name , $(wordlist 2, 999, $(PRIVATE_JAR_EXCLUDE_FILES))) \
-    | xargs rm -rf)
-$(if $(PRIVATE_JAR_PACKAGES), \
-    $(hide) find $(PRIVATE_CLASS_INTERMEDIATES_DIR) -mindepth 1 -type f \
-        $(foreach pkg, $(PRIVATE_JAR_PACKAGES), \
-            -not -path $(PRIVATE_CLASS_INTERMEDIATES_DIR)/$(subst .,/,$(pkg))/\*) -delete ; \
-        find $(PRIVATE_CLASS_INTERMEDIATES_DIR) -empty -delete)
-$(if $(PRIVATE_JAR_EXCLUDE_PACKAGES), $(hide) rm -rf \
-    $(foreach pkg, $(PRIVATE_JAR_EXCLUDE_PACKAGES), \
-        $(PRIVATE_CLASS_INTERMEDIATES_DIR)/$(subst .,/,$(pkg))))
-$(if $(PRIVATE_RMTYPEDEFS), $(hide) $(RMTYPEDEFS) -v $(PRIVATE_CLASS_INTERMEDIATES_DIR))
-$(if $(PRIVATE_JAR_MANIFEST), \
-    $(hide) sed -e 's/%BUILD_NUMBER%/$(BUILD_NUMBER)/' \
-            $(PRIVATE_JAR_MANIFEST) > $(dir $@)/manifest.mf && \
-        jar -cfm $@ $(dir $@)/manifest.mf \
-            -C $(PRIVATE_CLASS_INTERMEDIATES_DIR) ., \
-    $(hide) jar -cf $@ -C $(PRIVATE_CLASS_INTERMEDIATES_DIR) .)
-$(if $(PRIVATE_EXTRA_JAR_ARGS),$(call add-java-resources-to,$@))
+cat $(PRIVATE_CLASS_INTERMEDIATES_DIR)/kotlin-source-list
+$(hide) rm -f $(PRIVATE_CLASS_INTERMEDIATES_DIR)/kotlin-source-list
+$(hide) rm -f $(PRIVATE_CLASS_INTERMEDIATES_DIR)/kotlin-source-list-uniq
 endef
 
 define transform-java-to-classes.jar
+@echo "target Kotlin: $(PRIVATE_MODULE) ($(PRIVATE_CLASS_INTERMEDIATES_DIR))"
+$(call compile-kotlin,$(TARGET_KOTLINC),$(PRIVATE_BOOTCLASSPATH))
 @echo "target Java: $(PRIVATE_MODULE) ($(PRIVATE_CLASS_INTERMEDIATES_DIR))"
 $(call compile-java,$(TARGET_JAVAC),$(PRIVATE_BOOTCLASSPATH))
 endef
